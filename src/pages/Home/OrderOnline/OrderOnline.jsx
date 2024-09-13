@@ -15,7 +15,10 @@ const OrderOnline = () => {
     return (
         <section className="py-5 md:py-20">
             <div>
-                <SectionTitle />
+                <SectionTitle
+                    subHeading="From 11:00am to 10:00pm"
+                    heading="order online"
+                />
             </div>
             <div>
                 <Swiper
