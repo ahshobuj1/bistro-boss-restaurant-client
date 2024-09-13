@@ -1,5 +1,11 @@
+import HeaderBanner from '../HeaderBanner/HeaderBanner';
+
 const Home = () => {
-    return <div>Home</div>;
+    return (
+        <div>
+            <HeaderBanner />
+        </div>
+    );
 };
 
 export default Home;

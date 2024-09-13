@@ -23,7 +23,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <div className="navbar max-w-screen-xl fixed text-white bg-[#05050596]">
+            <div className="navbar max-w-screen-xl fixed text-white bg-[#05050596] z-20">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div
@@ -56,7 +56,7 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1">{navLinks}</ul>
                 </div>
                 <div className="navbar-end">
-                    <div className="dropdown dropdown-end">
+                    <div className="dropdown dropdown-end text-black">
                         <div
                             tabIndex={0}
                             role="button"
@@ -64,7 +64,7 @@ const Navbar = () => {
                             <div className="indicator">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
+                                    className="h-5 w-5 text-white"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor">
