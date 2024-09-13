@@ -13,7 +13,7 @@ const PopularItems = () => {
         <section className="my-10 md:my-24">
             <div>
                 <SectionTitle
-                    heading="FROM OUR MENU"
+                    heading="OUR popular MENU"
                     subHeading="Check it out"
                 />
             </div>

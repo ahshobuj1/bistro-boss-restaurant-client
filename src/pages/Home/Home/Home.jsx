@@ -1,5 +1,6 @@
 import BistroCover from '../BistroCover/BistroCover';
 import CallUs from '../CallUs/CallUs';
+import Featured from '../Featured/Featured';
 import HeaderBanner from '../HeaderBanner/HeaderBanner';
 import OrderOnline from '../OrderOnline/OrderOnline';
 import PopularItems from '../PopularItems/PopularItems';
@@ -14,6 +15,7 @@ const Home = () => {
             <PopularItems />
             <CallUs />
             <RecommendItem />
+            <Featured />
         </div>
     );
 };

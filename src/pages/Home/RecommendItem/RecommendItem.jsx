@@ -7,7 +7,7 @@ const RecommendItem = () => {
     const saladItems = menuItems.filter((item) => item.category === 'salad');
 
     return (
-        <section className="my-10 md:my-24">
+        <section className="my-10 md:my-24 ">
             <div>
                 <SectionTitle
                     heading="CHEF RECOMMENDS"
