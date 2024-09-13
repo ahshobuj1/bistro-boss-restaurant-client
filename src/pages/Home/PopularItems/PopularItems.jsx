@@ -10,7 +10,7 @@ const PopularItems = () => {
     );
 
     return (
-        <section className="my-24">
+        <section className="my-10 md:my-24">
             <div>
                 <SectionTitle
                     heading="FROM OUR MENU"
