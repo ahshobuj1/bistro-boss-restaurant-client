@@ -13,5 +13,5 @@ const MenuButton = ({text}) => {
 export default MenuButton;
 
 MenuButton.propTypes = {
-    text: PropTypes.object,
+    text: PropTypes.string,
 };
