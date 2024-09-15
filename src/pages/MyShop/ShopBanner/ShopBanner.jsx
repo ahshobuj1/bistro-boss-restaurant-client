@@ -1,11 +1,11 @@
 import SectionCover from '../../Shared/SectionCover/SectionCover';
-import img from '../../../assets/menu/banner3.jpg';
+import bannerImg from '../../../assets/shop/banner2.jpg';
 
-const MenuBanner = () => {
+const ShopBanner = () => {
     return (
-        <div className="mb-10">
+        <div className="mb-10 md:mb-32">
             <SectionCover
-                img={img}
+                img={bannerImg}
                 heading="OUR MENU"
                 desc="WOULD YOU LIKE TO TRY A DISH"
             />
@@ -13,4 +13,4 @@ const MenuBanner = () => {
     );
 };
 
-export default MenuBanner;
+export default ShopBanner;

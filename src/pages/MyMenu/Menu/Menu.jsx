@@ -17,9 +17,7 @@ const Menu = () => {
 
     return (
         <section>
-            <div className="mb-10">
-                <MenuBanner />
-            </div>
+            <MenuBanner />
             <SectionTitle heading="TODAY'S OFFER" subHeading="Don't Miss" />
 
             {/* Desserts */}
