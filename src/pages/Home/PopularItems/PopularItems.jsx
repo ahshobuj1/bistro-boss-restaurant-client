@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import MenuButton from '../../../components/MenuButton/MenuButton';
 import useLoadData from '../../../hooks/useLoadData/useLoadData';
 import ItemCard from '../../Shared/ItemCard/ItemCard';
@@ -22,7 +23,9 @@ const PopularItems = () => {
                     <ItemCard key={item._id} item={item} />
                 ))}
             </div>
-            <MenuButton text="view full menu" />
+            <Link to="/menu">
+                <MenuButton text="view full menu" />
+            </Link>
         </section>
     );
 };

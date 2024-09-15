@@ -6,6 +6,7 @@ import pizzaImg from '../../../assets/menu/pizza-bg.jpg';
 import saladImg from '../../../assets/menu/salad-bg.jpg';
 import soupImg from '../../../assets/menu/soup-bg.jpg';
 import SectionTitle from '../../Shared/SectionTitle/SectionTitle';
+import DynamicTitle from '../../../components/WebTitle/DynamicTitle';
 
 const Menu = () => {
     const menuItems = useLoadData();
@@ -17,6 +18,7 @@ const Menu = () => {
 
     return (
         <section>
+            <DynamicTitle title="Menu" />
             <MenuBanner />
             <SectionTitle heading="TODAY'S OFFER" subHeading="Don't Miss" />
 

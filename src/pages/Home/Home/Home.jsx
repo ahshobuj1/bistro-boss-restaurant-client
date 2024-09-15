@@ -1,3 +1,4 @@
+import DynamicTitle from '../../../components/WebTitle/DynamicTitle';
 import BistroCover from '../BistroCover/BistroCover';
 import CallUs from '../CallUs/CallUs';
 import Featured from '../Featured/Featured';
@@ -10,6 +11,7 @@ import Testimonials from '../Testimonials/Testimonials';
 const Home = () => {
     return (
         <div>
+            <DynamicTitle title="Home" />
             <HeaderBanner />
             <OrderOnline />
             <BistroCover />
