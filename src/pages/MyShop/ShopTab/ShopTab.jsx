@@ -3,9 +3,16 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import useLoadData from '../../../hooks/useLoadData/useLoadData';
 import TabPanelItems from './TabPanelItems/TabPanelItems';
+import {useParams} from 'react-router-dom';
 
 const ShopTab = () => {
     const menuItems = useLoadData();
+    const {category} = useParams();
+    const categories = ['salads', 'pizza', 'soups', 'dessert', 'drinks'];
+    const initialIndex = categories.indexOf(category);
+
+    console.log(initialIndex);
+    console.log(category);
 
     const dessert = menuItems.filter((item) => item.category === 'dessert');
     const pizza = menuItems.filter((item) => item.category === 'pizza');
@@ -13,12 +20,12 @@ const ShopTab = () => {
     const soup = menuItems.filter((item) => item.category === 'soup');
     const drinks = menuItems.filter((item) => item.category === 'drinks');
 
-    const [tabIndex, setTabIndex] = useState(0);
+    const [tabIndex, setTabIndex] = useState(initialIndex);
 
     return (
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
             <TabList>
-                <div className="text-center mb-4 md:mb-12">
+                <div className="text-center ">
                     <Tab>SALAD</Tab>
                     <Tab>PIZZA</Tab>
                     <Tab>SOUPS</Tab>

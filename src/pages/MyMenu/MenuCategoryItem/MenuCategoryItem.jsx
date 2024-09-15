@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import MenuButton from '../../../components/MenuButton/MenuButton';
 import ItemCard from '../../Shared/ItemCard/ItemCard';
 import SectionCover from '../../Shared/SectionCover/SectionCover';
@@ -11,7 +12,9 @@ const MenuCategoryItem = ({items, img, heading, desc}) => {
                     <ItemCard key={item._id} item={item} />
                 ))}
             </div>
-            <MenuButton text="order your favorite food" />
+            <Link to={`/shop/${heading}`}>
+                <MenuButton text="order your favorite food" />
+            </Link>
             <div className="my-6">
                 <SectionCover img={img} heading={heading} desc={desc} />
             </div>
