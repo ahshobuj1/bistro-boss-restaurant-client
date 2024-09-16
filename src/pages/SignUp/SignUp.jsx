@@ -24,7 +24,7 @@ const SignUp = () => {
                 <img
                     src={bgImage}
                     alt="background image"
-                    className="w-full h-full"
+                    className="w-full h-full lg:h-screen"
                 />
                 <div className="hero-content flex-col lg:flex-row-reverse mx-5 my-24 shadow-2xl rounded-xl">
                     <div className="text-center lg:text-left">
@@ -110,13 +110,6 @@ const SignUp = () => {
                                     placeholder="password"
                                     className="input input-bordered"
                                 />
-                                <label className="label">
-                                    <a
-                                        href="#"
-                                        className="label-text-alt link link-hover">
-                                        Forgot password?
-                                    </a>
-                                </label>
                             </div>
                             <p className="text-orange-500">
                                 {errors.password?.message}
