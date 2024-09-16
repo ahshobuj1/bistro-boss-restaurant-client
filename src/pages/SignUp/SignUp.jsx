@@ -14,6 +14,7 @@ const SignUp = () => {
     const onSubmit = (data) => {
         console.log(data);
         const {name, photoURL, email, password} = data;
+        console.log(name, photoURL, email, password);
     };
 
     console.log('found errors ', errors);
@@ -103,7 +104,7 @@ const SignUp = () => {
                                         pattern: {
                                             value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
                                             message:
-                                                'At least one upper case, one lower case, one digit and special characters',
+                                                'At least one upper case, one lower case, one digit and one special characters',
                                         },
                                     })}
                                     type="password"

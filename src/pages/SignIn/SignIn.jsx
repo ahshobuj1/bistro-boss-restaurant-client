@@ -14,6 +14,7 @@ const SignIn = () => {
     const onSubmit = (data) => {
         console.log(data);
         const {name, photoURL, email, password} = data;
+        console.log(name, photoURL, email, password);
     };
 
     console.log('found errors ', errors);
