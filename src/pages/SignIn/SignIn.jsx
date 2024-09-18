@@ -3,8 +3,11 @@ import bgImage from '../../assets/others/authentication.png';
 import SignInImg from '../../assets/others/authentication2.png';
 import {FaFacebook, FaGithub, FaGoogle} from 'react-icons/fa';
 import {useForm} from 'react-hook-form';
+import useAuth from '../../hooks/useAuth/useAuth';
 
 const SignIn = () => {
+    const {loginUser, loginWithGoogle} = useAuth();
+
     const {
         register,
         handleSubmit,
@@ -12,12 +15,25 @@ const SignIn = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
         const {name, photoURL, email, password} = data;
         console.log(name, photoURL, email, password);
+
+        loginUser(email, password)
+            .then((res) => {
+                console.log(res.user);
+            })
+            .catch((err) => console.log(err.message));
     };
 
-    console.log('found errors ', errors);
+    const handleGoogleLogin = () => {
+        loginWithGoogle()
+            .then((res) => {
+                console.log(res.user);
+            })
+            .catch((err) => console.log(err.message));
+    };
+
+    //console.log('found errors ', errors);
 
     return (
         <section>
@@ -95,7 +111,9 @@ const SignIn = () => {
                                 </p>
                                 <p>Or login with</p>
                                 <div className="flex gap-6 justify-center text-3xl py-5">
-                                    <FaGoogle />
+                                    <button onClick={handleGoogleLogin}>
+                                        <FaGoogle />
+                                    </button>
                                     <FaGithub />
                                     <FaFacebook />
                                 </div>
