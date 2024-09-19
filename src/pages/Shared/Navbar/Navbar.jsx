@@ -1,15 +1,32 @@
 import {NavLink} from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth/useAuth';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
     const {user, logoutUser} = useAuth();
 
     const handleLogout = () => {
-        logoutUser()
-            .then(() => {
-                console.log('removed user');
-            })
-            .catch((err) => console.log(err.message));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to logout this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Logout!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logoutUser()
+                    .then(() => {
+                        Swal.fire({
+                            title: 'Logged out!',
+                            text: 'Your account has been logged out.',
+                            icon: 'success',
+                        });
+                    })
+                    .catch((err) => console.log(err.message));
+            }
+        });
     };
 
     const navLinks = (

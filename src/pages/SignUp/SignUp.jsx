@@ -1,13 +1,14 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import bgImage from '../../assets/others/authentication.png';
 import SignUpImg from '../../assets/others/authentication2.png';
 import {FaFacebook, FaGithub, FaGoogle} from 'react-icons/fa';
 import {useForm} from 'react-hook-form';
 import useAuth from '../../hooks/useAuth/useAuth';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
-    //const {createUser, loginWithGoogle} = useAuth();
     const {createUser, loginWithGoogle} = useAuth();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -20,8 +21,14 @@ const SignUp = () => {
         console.log(name, photoURL, email, password);
 
         createUser(email, password)
-            .then((res) => {
-                console.log(res.user);
+            .then(() => {
+                //console.log(res.user);
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Your account has been created successfully!',
+                    icon: 'success',
+                });
+                navigate('/');
             })
             .catch((err) => console.log(err.message));
     };
@@ -30,6 +37,12 @@ const SignUp = () => {
         loginWithGoogle()
             .then((res) => {
                 console.log(res.user);
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Your account has been created successfully!',
+                    icon: 'success',
+                });
+                navigate('/');
             })
             .catch((err) => console.log(err.message));
     };
