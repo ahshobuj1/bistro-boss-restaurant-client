@@ -30,6 +30,7 @@ const SignIn = () => {
                     text: 'Your account has been logged in successfully!',
                     icon: 'success',
                 });
+                console.log(location?.state);
                 navigate(location?.state ? location?.state : '/');
             })
             .catch((err) => console.log(err.message));
@@ -40,12 +41,14 @@ const SignIn = () => {
             .then((res) => {
                 console.log(res.user);
 
-                Swal.fire({
+                /*  Swal.fire({
                     title: 'Success',
                     text: 'Your account has been logged in successfully!',
                     icon: 'success',
-                });
-                navigate(location?.state ? location?.state : '/');
+                }); */
+                console.log(location?.state);
+                console.log(location);
+                navigate(location ? location?.state : '/');
             })
             .catch((err) => console.log(err.message));
     };

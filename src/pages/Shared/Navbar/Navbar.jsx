@@ -1,9 +1,12 @@
 import {NavLink} from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import useQueryMethod from '../../../hooks/useQuery/useQuery';
 
 const Navbar = () => {
     const {user, logoutUser} = useAuth();
+    const {carts} = useQueryMethod();
+    console.log(carts);
 
     const handleLogout = () => {
         Swal.fire({
