@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import bgImage from '../../assets/others/authentication.png';
 import SignInImg from '../../assets/others/authentication2.png';
 import {FaFacebook, FaGithub, FaGoogle} from 'react-icons/fa';
@@ -7,6 +7,9 @@ import useAuth from '../../hooks/useAuth/useAuth';
 
 const SignIn = () => {
     const {loginUser, loginWithGoogle} = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    console.log(location);
 
     const {
         register,
@@ -21,6 +24,7 @@ const SignIn = () => {
         loginUser(email, password)
             .then((res) => {
                 console.log(res.user);
+                navigate(location?.state ? location?.state : '/');
             })
             .catch((err) => console.log(err.message));
     };
@@ -29,6 +33,7 @@ const SignIn = () => {
         loginWithGoogle()
             .then((res) => {
                 console.log(res.user);
+                navigate(location?.state ? location?.state : '/');
             })
             .catch((err) => console.log(err.message));
     };
