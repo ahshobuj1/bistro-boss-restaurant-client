@@ -6,7 +6,10 @@ import useCartQuery from '../../../hooks/useCartQuery/useCartQuery';
 const Navbar = () => {
     const {user, logoutUser} = useAuth();
     const [carts] = useCartQuery();
-    console.log(carts);
+    const totalPrice = carts.reduce(
+        (prevTotal, cart) => prevTotal + cart.price,
+        0
+    );
 
     const handleLogout = () => {
         Swal.fire({
@@ -119,11 +122,11 @@ const Navbar = () => {
                                     {carts.length} Items
                                 </span>
                                 <span className="text-info">
-                                    Subtotal: $999
+                                    Subtotal: $ {totalPrice}
                                 </span>
                                 <div className="card-actions">
                                     <Link to="/dashboard/cart">
-                                        <button className="btn btn-primary btn-block">
+                                        <button className="btn btn-sm px-12 btn-secondary w-full ">
                                             View cart
                                         </button>
                                     </Link>
