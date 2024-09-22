@@ -1,13 +1,15 @@
 import {Link, useNavigate} from 'react-router-dom';
 import bgImage from '../../assets/others/authentication.png';
 import SignUpImg from '../../assets/others/authentication2.png';
-import {FaFacebook, FaGithub, FaGoogle} from 'react-icons/fa';
 import {useForm} from 'react-hook-form';
 import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
+import {updateProfile} from 'firebase/auth';
+import auth from '../../Firebase/firebase.config';
 
 const SignUp = () => {
-    const {createUser, loginWithGoogle} = useAuth();
+    const {createUser} = useAuth();
     const navigate = useNavigate();
 
     const {
@@ -21,28 +23,22 @@ const SignUp = () => {
         console.log(name, photoURL, email, password);
 
         createUser(email, password)
-            .then(() => {
-                //console.log(res.user);
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Your account has been created successfully!',
-                    icon: 'success',
-                });
-                navigate('/');
-            })
-            .catch((err) => console.log(err.message));
-    };
-
-    const handleGoogleLogin = () => {
-        loginWithGoogle()
             .then((res) => {
                 console.log(res.user);
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Your account has been created successfully!',
-                    icon: 'success',
-                });
-                navigate('/');
+
+                updateProfile(auth.currentUser, {
+                    displayName: name,
+                    photoURL: photoURL,
+                })
+                    .then(() => {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Your account has been created successfully!',
+                            icon: 'success',
+                        });
+                        navigate('/');
+                    })
+                    .catch((err) => console.log(err.message));
             })
             .catch((err) => console.log(err.message));
     };
@@ -163,13 +159,8 @@ const SignUp = () => {
                                     </Link>
                                 </p>
                                 <p>Or sign up with</p>
-                                <div className="flex gap-6 justify-center text-3xl py-5">
-                                    <button onClick={handleGoogleLogin}>
-                                        <FaGoogle />
-                                    </button>
-                                    <FaGithub />
-                                    <FaFacebook />
-                                </div>
+
+                                <SocialLogin />
                             </div>
                         </form>
                     </div>

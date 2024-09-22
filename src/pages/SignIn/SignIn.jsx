@@ -1,13 +1,13 @@
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import bgImage from '../../assets/others/authentication.png';
 import SignInImg from '../../assets/others/authentication2.png';
-import {FaFacebook, FaGithub, FaGoogle} from 'react-icons/fa';
 import {useForm} from 'react-hook-form';
 import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const SignIn = () => {
-    const {loginUser, loginWithGoogle} = useAuth();
+    const {loginUser} = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -32,23 +32,6 @@ const SignIn = () => {
                 });
                 console.log(location?.state);
                 navigate(location?.state ? location?.state : '/');
-            })
-            .catch((err) => console.log(err.message));
-    };
-
-    const handleGoogleLogin = () => {
-        loginWithGoogle()
-            .then((res) => {
-                console.log(res.user);
-
-                /*  Swal.fire({
-                    title: 'Success',
-                    text: 'Your account has been logged in successfully!',
-                    icon: 'success',
-                }); */
-                console.log(location?.state);
-                console.log(location);
-                navigate(location ? location?.state : '/');
             })
             .catch((err) => console.log(err.message));
     };
@@ -130,13 +113,8 @@ const SignIn = () => {
                                     </Link>
                                 </p>
                                 <p>Or login with</p>
-                                <div className="flex gap-6 justify-center text-3xl py-5">
-                                    <button onClick={handleGoogleLogin}>
-                                        <FaGoogle />
-                                    </button>
-                                    <FaGithub />
-                                    <FaFacebook />
-                                </div>
+
+                                <SocialLogin />
                             </div>
                         </form>
                     </div>
