@@ -7,10 +7,12 @@ import Swal from 'sweetalert2';
 import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 import {updateProfile} from 'firebase/auth';
 import auth from '../../Firebase/firebase.config';
+import useAxiosPublic from '../../hooks/useAxiosPublic/useAxiosPublic';
 
 const SignUp = () => {
     const {createUser} = useAuth();
     const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
 
     const {
         register,
@@ -20,7 +22,6 @@ const SignUp = () => {
 
     const onSubmit = (data) => {
         const {name, photoURL, email, password} = data;
-        console.log(name, photoURL, email, password);
 
         createUser(email, password)
             .then((res) => {
@@ -31,12 +32,20 @@ const SignUp = () => {
                     photoURL: photoURL,
                 })
                     .then(() => {
-                        Swal.fire({
-                            title: 'Success',
-                            text: 'Your account has been created successfully!',
-                            icon: 'success',
+                        // save user data in database
+                        const userInfo = {name, photoURL, email};
+
+                        axiosPublic.post('/users', userInfo).then((res) => {
+                            console.log(res.data);
+                            if (res.data.insertedId) {
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: 'Your account has been created successfully!',
+                                    icon: 'success',
+                                });
+                                navigate('/');
+                            }
                         });
-                        navigate('/');
                     })
                     .catch((err) => console.log(err.message));
             })

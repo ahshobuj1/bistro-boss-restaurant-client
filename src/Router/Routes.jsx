@@ -49,7 +49,7 @@ const router = createBrowserRouter([
             // Admin path
 
             {
-                path: 'allUsers',
+                path: ' allUsers',
                 element: <AllUsers />,
             },
         ],
