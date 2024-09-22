@@ -28,30 +28,30 @@ const FoodCard = ({item}) => {
                     navigate('/signin', {state: location.pathname});
                 }
             });
+        } else {
+            const cart = {
+                cartId: _id,
+                name,
+                image,
+                price,
+                email: user?.email,
+            };
+
+            axiosSecure.post('/carts', cart).then((res) => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Your order has been added to the cart',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+
+                    refetch();
+                }
+            });
         }
-
-        const cart = {
-            cartId: _id,
-            name,
-            image,
-            price,
-            email: user?.email,
-        };
-
-        axiosSecure.post('/carts', cart).then((res) => {
-            console.log(res.data);
-            if (res.data.insertedId) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Your order has been added to the cart',
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
-
-                refetch();
-            }
-        });
     };
 
     return (
