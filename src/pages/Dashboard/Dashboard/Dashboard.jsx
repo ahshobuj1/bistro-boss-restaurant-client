@@ -21,6 +21,7 @@ const Dashboard = () => {
                     aria-label="close sidebar"
                     className="drawer-overlay"></label>
                 {/* Sidebar content here */}
+
                 <SideNav />
             </div>
         </section>

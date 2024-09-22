@@ -1,5 +1,5 @@
-import useCartQuery from '../../../hooks/useCartQuery/useCartQuery';
-import SectionTitle from '../../Shared/SectionTitle/SectionTitle';
+import useCartQuery from '../../../../hooks/useCartQuery/useCartQuery';
+import SectionTitle from '../../../Shared/SectionTitle/SectionTitle';
 import TableRaw from './TableRow/TableRaw';
 
 const Cart = () => {

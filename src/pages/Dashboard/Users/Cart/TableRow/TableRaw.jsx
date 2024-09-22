@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'; // ES6
 import {FaTrash} from 'react-icons/fa';
 import Swal from 'sweetalert2';
-import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
-import useCartQuery from '../../../../hooks/useCartQuery/useCartQuery';
+import useAxiosSecure from '../../../../../hooks/useAxiosSecure/useAxiosSecure';
+import useCartQuery from '../../../../../hooks/useCartQuery/useCartQuery';
 
 const TableRaw = ({cart, idx}) => {
     const {_id, name, image, price} = cart;

@@ -7,7 +7,7 @@ import Shop from '../pages/MyShop/Shop/Shop';
 import SignUp from '../pages/SignUp/SignUp';
 import SignIn from '../pages/SignIn/SignIn';
 import Dashboard from '../pages/Dashboard/Dashboard/Dashboard';
-import Cart from '../pages/Dashboard/Cart/Cart';
+import Cart from '../pages/Dashboard/Users/Cart/Cart';
 
 const router = createBrowserRouter([
     {
