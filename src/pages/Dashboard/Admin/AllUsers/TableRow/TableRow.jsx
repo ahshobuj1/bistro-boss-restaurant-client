@@ -21,7 +21,7 @@ const TableRow = ({user, idx}) => {
             confirmButtonText: 'Yes, Admin him!',
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/users/admin?email=${email}`).then((res) => {
+                axiosSecure.patch(`/users?email=${email}`).then((res) => {
                     console.log(res);
                     if (res.data.modifiedCount > 0) {
                         Swal.fire({

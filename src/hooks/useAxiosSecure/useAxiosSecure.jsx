@@ -31,9 +31,9 @@ const useAxiosSecure = () => {
         async (error) => {
             console.log('error in the interceptors', error.response.status);
             const status = error.response.status;
-            console.log('status code ', status);
             if ((status === 401) | (status === 403)) {
                 // console.log('logout the user');
+                // Logout unauthorized user
                 await logoutUser();
                 navigate('/signin');
             }
