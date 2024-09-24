@@ -10,6 +10,7 @@ import {
     signInWithPopup,
 } from 'firebase/auth';
 import auth from '../Firebase/firebase.config';
+import useAxiosSecure from '../hooks/useAxiosSecure/useAxiosSecure';
 
 export const AuthContext = createContext();
 const provider = new GoogleAuthProvider();
@@ -17,6 +18,7 @@ const provider = new GoogleAuthProvider();
 const UserContext = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosSecure = useAxiosSecure();
 
     // create user with email and password
     const createUser = (email, password) => {
@@ -44,10 +46,17 @@ const UserContext = ({children}) => {
             console.log('current user ', currentUser);
             setUser(currentUser);
             setLoading(false);
+            axiosSecure
+                .post('/jwt', currentUser.email)
+                .then((res) => {
+                    console.log(res.data);
+                    localStorage.setItem('access-token', res.data.token);
+                })
+                .catch((err) => console.log(err.message));
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [axiosSecure]);
 
     const authInfo = {
         user,
