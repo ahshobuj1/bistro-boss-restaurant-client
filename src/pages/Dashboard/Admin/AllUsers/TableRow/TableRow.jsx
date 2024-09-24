@@ -9,9 +9,35 @@ const TableRow = ({user, idx}) => {
     const axiosSecure = useAxiosSecure();
     const [, refetch] = useUserQuery();
 
-    const handleDeleteUser = (email) => {
+    const handleAdMakeAdmin = (email) => {
         console.log(email);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You want to make the user (${email}) Admin!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Admin him!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/users/admin?email=${email}`).then((res) => {
+                    console.log(res);
+                    if (res.data.modifiedCount > 0) {
+                        Swal.fire({
+                            title: 'success!',
+                            text: `(${email}) User Admin Now.`,
+                            icon: 'success',
+                        });
 
+                        refetch();
+                    }
+                });
+            }
+        });
+    };
+
+    const handleDeleteUser = (email) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -55,9 +81,15 @@ const TableRow = ({user, idx}) => {
             </td>
             <td>{email}</td>
             <td>
-                <button className="btn btn-ghost btn-sm bg-[#D1A054] text-xl text-white">
-                    {user?.role === 'admin' ? 'admin' : <FaUsers></FaUsers>}
-                </button>
+                {user?.role === 'admin' ? (
+                    'Admin'
+                ) : (
+                    <button
+                        onClick={() => handleAdMakeAdmin(email)}
+                        className="btn btn-ghost btn-sm bg-[#D1A054] text-xl text-white">
+                        <FaUsers></FaUsers>
+                    </button>
+                )}
             </td>
             <th>
                 <button
@@ -73,6 +105,6 @@ const TableRow = ({user, idx}) => {
 export default TableRow;
 
 TableRow.propTypes = {
-    user: PropTypes.func,
+    user: PropTypes.object,
     idx: PropTypes.number,
 };
