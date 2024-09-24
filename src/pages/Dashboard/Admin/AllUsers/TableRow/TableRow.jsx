@@ -1,8 +1,42 @@
 import {FaTrash, FaUsers} from 'react-icons/fa';
 import PropTypes from 'prop-types'; // ES6
+import useAxiosSecure from '../../../../../hooks/useAxiosSecure/useAxiosSecure';
+import Swal from 'sweetalert2';
+import useUserQuery from '../../../../../hooks/useUserQuery/useUserQuery';
 
 const TableRow = ({user, idx}) => {
     const {email, name, photoURL} = user;
+    const axiosSecure = useAxiosSecure();
+    const [, refetch] = useUserQuery();
+
+    const handleDeleteUser = (email) => {
+        console.log(email);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/users?email=${email}`).then((res) => {
+                    console.log(res.data);
+                    if (res.data.deletedCount > 0) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your file has been deleted.',
+                            icon: 'success',
+                        });
+
+                        refetch();
+                    }
+                });
+            }
+        });
+    };
 
     return (
         <tr>
@@ -26,7 +60,9 @@ const TableRow = ({user, idx}) => {
                 </button>
             </td>
             <th>
-                <button className="btn btn-ghost btn-sm bg-red-500 text-xl text-white">
+                <button
+                    onClick={() => handleDeleteUser(email)}
+                    className="btn btn-ghost btn-sm bg-red-500 text-xl text-white">
                     <FaTrash></FaTrash>
                 </button>
             </th>
