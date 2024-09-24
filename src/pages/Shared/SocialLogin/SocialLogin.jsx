@@ -22,14 +22,16 @@ const SocialLogin = () => {
 
                 axiosPublic
                     .post('/users', userInfo)
-                    .then(() => {
-                        console.log('under public axios ', userInfo);
+                    .then((res) => {
+                        console.log('under public axios ', res.data, userInfo);
                         Swal.fire({
-                            title: 'Success',
-                            text: 'Your account has been logged in successfully!',
+                            position: 'center',
                             icon: 'success',
+                            title: 'Your account has been logged in successfully',
+                            showConfirmButton: false,
+                            timer: 3000,
                         });
-                        navigate(location ? location?.state : '/');
+                        navigate(location?.state ? location?.state : '/');
                     })
                     .catch((err) => console.log(err.message));
             })
