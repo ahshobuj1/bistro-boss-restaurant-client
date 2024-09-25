@@ -22,21 +22,25 @@ const UserContext = ({children}) => {
 
     // create user with email and password
     const createUser = (email, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
     // Login user
     const loginUser = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
 
     // Login with google
     const loginWithGoogle = () => {
+        setLoading(true);
         return signInWithPopup(auth, provider);
     };
 
     // Logout user
     const logoutUser = () => {
+        setLoading(true);
         return signOut(auth);
     };
 
@@ -45,10 +49,9 @@ const UserContext = ({children}) => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             console.log('current user ', currentUser);
             setUser(currentUser);
-            setLoading(false);
-            const userEmail = currentUser?.email;
 
             if (currentUser) {
+                const userEmail = {email: currentUser?.email};
                 axiosPublic
                     .post('/jwt', userEmail)
                     .then((res) => {
@@ -57,11 +60,14 @@ const UserContext = ({children}) => {
                                 'access-token',
                                 res.data.token
                             );
+
+                            setLoading(false);
                         }
                     })
                     .catch((err) => console.log(err.message));
             } else {
                 localStorage.removeItem('access-token');
+                setLoading(false);
             }
         });
 
