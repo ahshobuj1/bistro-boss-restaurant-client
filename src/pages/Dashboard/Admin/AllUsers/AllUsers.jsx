@@ -1,4 +1,5 @@
 import useUserQuery from '../../../../hooks/useUserQuery/useUserQuery';
+import SectionTitle from '../../../Shared/SectionTitle/SectionTitle';
 import TableRow from './TableRow/TableRow';
 
 const AllUsers = () => {
@@ -6,6 +7,12 @@ const AllUsers = () => {
 
     return (
         <section>
+            <div>
+                <SectionTitle
+                    heading="manage all users"
+                    subHeading="How Many! "
+                />
+            </div>
             <h1 className="text-3xl font-bold mb-5">
                 Total Users : {users.length}
             </h1>
