@@ -2,26 +2,66 @@ import {useForm} from 'react-hook-form';
 import SectionTitle from '../../../Shared/SectionTitle/SectionTitle';
 import {FaUtensils} from 'react-icons/fa';
 import useAxiosPublic from '../../../../hooks/useAxiosPublic/useAxiosPublic';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const AddItems = () => {
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, reset} = useForm();
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
-    const onSubmit = async (data) => {
+    const onSubmit = (data) => {
         console.log(data);
 
-        const api_key = import.meta.env.VITE_API_KEY_IMGbb;
-        const imageFile = data.image[0];
-        const formData = new FormData();
-        formData.append('image', imageFile);
-        const res = await axiosPublic.post(
-            `https://api.imgbb.com/1/upload?key=${api_key}`,
-            formData
-        );
-        const imageURL = res.data;
-        if (imageURL.data.success) {
-            console.log(imageURL.data.display_url);
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You won to add this ${data.name} Item!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Add Item!',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // Todo : upload items
+
+                const api_key = import.meta.env.VITE_API_KEY_IMGbb;
+                const imageFile = data.image[0];
+                const formData = new FormData();
+                formData.append('image', imageFile);
+                const res = await axiosPublic.post(
+                    `https://api.imgbb.com/1/upload?key=${api_key}`,
+                    formData
+                );
+                const imageData = res.data;
+
+                if (imageData.success) {
+                    const itemInfo = {
+                        name: data.name,
+                        price: data.price,
+                        category: data.category,
+                        recipe: data.recipe,
+                        image: imageData.data.display_url,
+                    };
+
+                    console.log(itemInfo);
+                    const resMenu = await axiosSecure.post('/menu', itemInfo);
+                    const result = resMenu.data;
+                    console.log(result);
+
+                    if (result.insertedId) {
+                        // Todo : success alert
+                        Swal.fire({
+                            title: 'Success!',
+                            text: `Your Item ${data.name} has been added.`,
+                            icon: 'success',
+                        });
+
+                        reset();
+                    }
+                }
+            }
+        });
     };
 
     return (

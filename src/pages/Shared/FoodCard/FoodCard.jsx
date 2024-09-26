@@ -57,7 +57,7 @@ const FoodCard = ({item}) => {
     return (
         <div className="card bg-[#F3F3F3] shadow-xl pt-2 mx-2 lg:mx-0">
             <figure>
-                <img src={image} alt="foods" className="rounded-xl" />
+                <img src={image} alt="foods" className="rounded-xl h-60" />
             </figure>
             <p className="absolute top-5 right-10 bg-neutral-800 rounded-xl text-white px-2">
                 ${price}
@@ -65,7 +65,7 @@ const FoodCard = ({item}) => {
 
             <div className="card-body ">
                 <h2 className="text-2xl font-semibold text-center">{name}</h2>
-                <p>{recipe}</p>
+                <p className="text-center">{recipe}</p>
                 <div className="card-actions justify-center">
                     <button
                         onClick={handleAddCart}
