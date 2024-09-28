@@ -5,10 +5,23 @@ import ItemCard from '../../Shared/ItemCard/ItemCard';
 import SectionTitle from '../../Shared/SectionTitle/SectionTitle';
 
 const PopularItems = () => {
-    const menuItems = useLoadData();
+    const [menuItems, loadingItems] = useLoadData();
+
     const popularItems = menuItems.filter(
         (item) => item.category === 'popular'
     );
+
+    if (loadingItems) {
+        return (
+            <div className="flex my-5 mx-auto w-52 flex-col gap-4">
+                <p>Please wait, Items is loading...</p>
+                <div className="skeleton h-32 w-full"></div>
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+            </div>
+        );
+    }
 
     return (
         <section className="my-10 md:my-24">

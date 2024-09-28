@@ -3,7 +3,7 @@ import FoodCard from '../../Shared/FoodCard/FoodCard';
 import SectionTitle from '../../Shared/SectionTitle/SectionTitle';
 
 const RecommendItem = () => {
-    const menuItems = useLoadData();
+    const [menuItems] = useLoadData();
     const saladItems = menuItems.filter((item) => item.category === 'salad');
 
     return (
