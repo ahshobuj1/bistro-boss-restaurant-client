@@ -119,7 +119,7 @@ const AddItems = () => {
                             </span>
                         </div>
                         <input
-                            type="number"
+                            type="Number"
                             {...register('price', {required: true})}
                             required
                             placeholder="Price"

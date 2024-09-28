@@ -1,7 +1,46 @@
-import {FaEdit, FaRegEdit, FaTrash} from 'react-icons/fa';
+import {FaRegEdit, FaTrash} from 'react-icons/fa';
+import PropTypes from 'prop-types';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
+import Swal from 'sweetalert2';
+import useLoadData from '../../../../hooks/useLoadData/useLoadData';
 
 const TableItem = ({item, idx}) => {
     const {_id, name, image, price} = item;
+    const [, , refetch] = useLoadData();
+    const axiosSecure = useAxiosSecure();
+
+    const handleDeleteItem = () => {
+        console.log(_id);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure
+                    .delete(`/menu/${_id}`)
+                    .then((res) => {
+                        console.log(res.data);
+
+                        if (res.data) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'Your file has been deleted.',
+                                icon: 'success',
+                            });
+
+                            refetch();
+                        }
+                    })
+                    .catch((err) => console.log(err.message));
+            }
+        });
+    };
 
     return (
         <tr>
@@ -25,7 +64,9 @@ const TableItem = ({item, idx}) => {
                 </button>
             </td>
             <th>
-                <button className="btn btn-ghost btn-sm bg-red-600 text-white rounded-full">
+                <button
+                    onClick={handleDeleteItem}
+                    className="btn btn-ghost btn-sm bg-red-600 text-white rounded-full">
                     <FaTrash></FaTrash>
                 </button>
             </th>
@@ -34,3 +75,8 @@ const TableItem = ({item, idx}) => {
 };
 
 export default TableItem;
+
+TableItem.propTypes = {
+    idx: PropTypes.number,
+    item: PropTypes.object,
+};
