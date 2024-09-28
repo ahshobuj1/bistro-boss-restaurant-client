@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
 import Swal from 'sweetalert2';
 import useLoadData from '../../../../hooks/useLoadData/useLoadData';
+import {Link} from 'react-router-dom';
 
 const TableItem = ({item, idx}) => {
     const {_id, name, image, price} = item;
     const [, , refetch] = useLoadData();
     const axiosSecure = useAxiosSecure();
 
-    const handleDeleteItem = () => {
-        console.log(_id);
+    const handleDeleteItem = (id) => {
+        console.log(id);
 
         Swal.fire({
             title: 'Are you sure?',
@@ -27,7 +28,7 @@ const TableItem = ({item, idx}) => {
                     .then((res) => {
                         console.log(res.data);
 
-                        if (res.data) {
+                        if (res.data.deletedCount > 0) {
                             Swal.fire({
                                 title: 'Deleted!',
                                 text: 'Your file has been deleted.',
@@ -59,13 +60,15 @@ const TableItem = ({item, idx}) => {
             <td>${price}</td>
 
             <td>
-                <button className="btn btn-sm rounded-full bg-green-500 text-white btn-ghost">
-                    <FaRegEdit></FaRegEdit>
-                </button>
+                <Link to={`/dashboard/updateItem/${_id}`}>
+                    <button className="btn btn-sm rounded-full bg-green-500 text-white btn-ghost">
+                        <FaRegEdit></FaRegEdit>
+                    </button>
+                </Link>
             </td>
             <th>
                 <button
-                    onClick={handleDeleteItem}
+                    onClick={() => handleDeleteItem(_id)}
                     className="btn btn-ghost btn-sm bg-red-600 text-white rounded-full">
                     <FaTrash></FaTrash>
                 </button>

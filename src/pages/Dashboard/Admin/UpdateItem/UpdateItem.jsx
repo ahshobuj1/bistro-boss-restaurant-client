@@ -1,77 +1,48 @@
-import {useForm} from 'react-hook-form';
+import {useLoaderData} from 'react-router-dom';
 import SectionTitle from '../../../Shared/SectionTitle/SectionTitle';
-import {FaUtensils} from 'react-icons/fa';
-import useAxiosPublic from '../../../../hooks/useAxiosPublic/useAxiosPublic';
-import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
+import {useForm} from 'react-hook-form';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
 
-const AddItems = () => {
-    const {register, handleSubmit, reset} = useForm();
-    const axiosPublic = useAxiosPublic();
+const UpdateItem = () => {
+    const item = useLoaderData();
+    const {_id, name, price, recipe, category} = item;
     const axiosSecure = useAxiosSecure();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const {register, handleSubmit} = useForm();
+    const onSubmit = (updatedItem) => {
+        console.log(updatedItem);
 
         Swal.fire({
             title: 'Are you sure?',
-            text: `You won to add this ${data.name} Item!`,
+            text: `You want to Update the ${name} Item!`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Add Item!',
-        }).then(async (result) => {
+            confirmButtonText: 'Yes, Update it!',
+        }).then((result) => {
             if (result.isConfirmed) {
-                // Todo : upload items
-
-                const api_key = import.meta.env.VITE_API_KEY_IMGbb;
-                const imageFile = data.image[0];
-                const formData = new FormData();
-                formData.append('image', imageFile);
-                const res = await axiosPublic.post(
-                    `https://api.imgbb.com/1/upload?key=${api_key}`,
-                    formData
-                );
-                const imageData = res.data;
-
-                if (imageData.success) {
-                    const itemInfo = {
-                        name: data.name,
-                        price: parseFloat(data.price),
-                        category: data.category,
-                        recipe: data.recipe,
-                        image: imageData.data.display_url,
-                    };
-
-                    console.log(itemInfo);
-                    const resMenu = await axiosSecure.post('/menu', itemInfo);
-                    const result = resMenu.data;
-                    console.log(result);
-
-                    if (result.insertedId) {
-                        // Todo : success alert
-                        Swal.fire({
-                            title: 'Success!',
-                            text: `Your Item ${data.name} has been added.`,
-                            icon: 'success',
-                        });
-
-                        reset();
-                    }
-                }
+                axiosSecure
+                    .patch(`/menu/${_id}`, updatedItem)
+                    .then((res) => {
+                        console.log(res.data);
+                        if (res.data.modifiedCount > 0) {
+                            Swal.fire({
+                                title: 'Updated!',
+                                text: `${name} has been updated successfully`,
+                                icon: 'success',
+                            });
+                        }
+                    })
+                    .catch((err) => console.log(err.message));
             }
         });
     };
 
     return (
-        <section>
-            <div>
-                <SectionTitle
-                    heading="Add an Items"
-                    subHeading="What's New !"
-                />
-            </div>
+        <div>
+            <SectionTitle heading="Update Item" subHeading="Update Your Item" />
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -82,6 +53,7 @@ const AddItems = () => {
                     </div>
                     <input
                         type="text"
+                        defaultValue={name}
                         {...register('name', {required: true})}
                         required
                         placeholder="Recipe Name"
@@ -96,7 +68,7 @@ const AddItems = () => {
                             </span>
                         </div>
                         <select
-                            defaultValue=""
+                            defaultValue={category}
                             required
                             {...register('category', {required: true})}
                             className="select select-bordered w-full ">
@@ -120,8 +92,8 @@ const AddItems = () => {
                         </div>
                         <input
                             type="Number"
-                            {...register('price', {required: true})}
-                            required
+                            {...register('price')}
+                            defaultValue={price}
                             placeholder="Price"
                             className="input input-bordered w-full"
                         />
@@ -134,34 +106,21 @@ const AddItems = () => {
                         </span>
                     </div>
                     <textarea
+                        defaultValue={recipe}
                         {...register('recipe')}
                         placeholder="Recipe Details"
                         required
                         className="textarea textarea-bordered textarea-md w-full h-40"></textarea>
                 </label>
 
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text font-medium">
-                            Item Image
-                        </span>
-                    </div>
-                    <input
-                        type="file"
-                        {...register('image')}
-                        required
-                        className="file-input file-input-bordered w-full max-w-xs"
-                    />
-                </label>
-
                 <button
                     type="submit"
-                    className="btn btn-outline px-6 text-white bg-gradient-to-r from-[#835D23] to-[#B58130]">
-                    Add Items <FaUtensils />
+                    className="btn btn-outline w-full px-6 text-white bg-gradient-to-r from-[#835D23] to-[#B58130]">
+                    Update Item
                 </button>
             </form>
-        </section>
+        </div>
     );
 };
 
-export default AddItems;
+export default UpdateItem;
