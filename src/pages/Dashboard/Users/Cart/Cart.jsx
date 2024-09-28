@@ -1,9 +1,11 @@
+import {Link} from 'react-router-dom';
 import useCartQuery from '../../../../hooks/useCartQuery/useCartQuery';
 import SectionTitle from '../../../Shared/SectionTitle/SectionTitle';
 import TableRaw from './TableRow/TableRaw';
 
 const Cart = () => {
     const [carts] = useCartQuery();
+
     const totalPrice = carts.reduce(
         (prevTotal, cart) => prevTotal + cart.price,
         0
@@ -24,9 +26,11 @@ const Cart = () => {
                         Total Price : {totalPrice}
                     </h2>
 
-                    <button className="btn btn-outline btn-sm bg-yellow-600 text-white">
-                        Payment
-                    </button>
+                    <Link to="/dashboard/payment">
+                        <button className="btn btn-outline btn-sm bg-yellow-600 text-white">
+                            Payment
+                        </button>
+                    </Link>
                 </div>
 
                 <div>

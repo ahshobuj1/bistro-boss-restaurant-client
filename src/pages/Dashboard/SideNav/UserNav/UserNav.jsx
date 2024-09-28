@@ -23,7 +23,7 @@ const UserNav = () => {
                 </NavLink>
             </li>
             <li>
-                <NavLink to="/dashboard/payment">
+                <NavLink to="/dashboard/paymentHistory">
                     <FaCcAmazonPay></FaCcAmazonPay> Payment History
                 </NavLink>
             </li>

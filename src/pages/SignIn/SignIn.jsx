@@ -1,6 +1,6 @@
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import bgImage from '../../assets/others/authentication.png';
-import SignInImg from '../../assets/others/authentication2.png';    
+import SignInImg from '../../assets/others/authentication2.png';
 import {useForm} from 'react-hook-form';
 import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';

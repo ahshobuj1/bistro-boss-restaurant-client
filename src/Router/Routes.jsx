@@ -14,6 +14,7 @@ import PrivateRoutes from './PrivateRoutes';
 import AddItems from '../pages/Dashboard/Admin/AddItems/AddItems';
 import ManageItems from '../pages/Dashboard/Admin/ManageItems/ManageItems';
 import UpdateItem from '../pages/Dashboard/Admin/UpdateItem/UpdateItem';
+import StripePayment from '../pages/Dashboard/Users/PaymentMethodStripe/StripePayment';
 
 const router = createBrowserRouter([
     {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
                 ),
                 loader: ({params}) =>
                     fetch(`http://localhost:5000/menu/${params.id}`),
+            },
+            {
+                path: 'payment',
+                element: <StripePayment />,
             },
         ],
     },
