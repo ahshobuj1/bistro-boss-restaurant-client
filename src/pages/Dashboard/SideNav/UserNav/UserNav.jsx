@@ -7,8 +7,11 @@ import {
 } from 'react-icons/fa';
 import {TbMessageStar} from 'react-icons/tb';
 import {NavLink} from 'react-router-dom';
+import useCartQuery from '../../../../hooks/useCartQuery/useCartQuery';
 
 const UserNav = () => {
+    const [carts] = useCartQuery();
+
     return (
         <>
             <li>
@@ -29,7 +32,7 @@ const UserNav = () => {
             </li>
             <li>
                 <NavLink to="/dashboard/cart">
-                    <FaShoppingCart></FaShoppingCart>My cart
+                    <FaShoppingCart></FaShoppingCart>My cart ({carts.length})
                 </NavLink>
             </li>
             <li>

@@ -24,5 +24,10 @@
 
 
 
+*---------------Add PaymentHistory to the data base and delete card after payment------------------*
+1. If paymentIntent status = succeeded : send a post request with payment details and carts details
+2. Manage backend : store payment details and deleteMany carts with id from cartCollection
+3. Send get request to get payment history for display in table 
+
 
 * */

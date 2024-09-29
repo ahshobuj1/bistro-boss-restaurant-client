@@ -4,6 +4,7 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
 import useCartQuery from '../../../../hooks/useCartQuery/useCartQuery';
 import useAuth from '../../../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 const CheckoutForm = () => {
     const [error, setError] = useState('');
@@ -12,8 +13,11 @@ const CheckoutForm = () => {
 
     const axiosSecure = useAxiosSecure();
     const {user} = useAuth();
-    const [carts] = useCartQuery();
-    const totalPrice = carts?.reduce((total, cart) => total + cart.price, 0);
+    const [carts, refetch] = useCartQuery();
+    const totalPrice = carts?.reduce(
+        (total, cart) => total + parseFloat(cart.price),
+        0
+    );
 
     const stripe = useStripe();
     const elements = useElements();
@@ -24,7 +28,7 @@ const CheckoutForm = () => {
             axiosSecure
                 .post('/create-payment-intent', {price: totalPrice})
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     setClientSecret(res.data.clientSecret);
                 })
                 .catch((err) => console.log(err.message));
@@ -63,7 +67,7 @@ const CheckoutForm = () => {
                 );
 
                 if (error) {
-                    console.log('create payment method error :', error);
+                    //console.log('create payment method error :', error);
                     setError(error.message);
                 } else {
                     console.log('createPaymentMethod', paymentMethod);
@@ -90,13 +94,37 @@ const CheckoutForm = () => {
                         console.log(paymentIntent.id);
                         setTransactionId(paymentIntent.id);
 
-                        Swal.fire({
-                            position: 'top',
-                            icon: 'success',
-                            title: `Successful Payment ${totalPrice} USD!`,
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
+                        const paymentHistory = {
+                            name: user?.displayName,
+                            email: user?.email,
+                            price: totalPrice,
+                            status: 'pending',
+                            transactionId: paymentIntent.id,
+                            date: moment().format('MMMM Do YYYY, h:mm:ss a'),
+                            ids: carts.map((cart) => cart._id),
+                            cartIds: carts.map((cart) => cart.cartId),
+                        };
+
+                        axiosSecure
+                            .post('/payments', paymentHistory)
+                            .then((res) => {
+                                console.log(res.data);
+                                if (
+                                    res.data.paymentResult.insertedId &&
+                                    res.data.cartResult.deletedCount > 0
+                                ) {
+                                    Swal.fire({
+                                        position: 'top',
+                                        icon: 'success',
+                                        title: `Successful Payment ${totalPrice} USD!`,
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                    });
+
+                                    refetch();
+                                }
+                            })
+                            .catch((err) => console.log(err.message));
                     }
                 }
             }
@@ -135,7 +163,7 @@ const CheckoutForm = () => {
             <p className="text-red-500 mt-2">{error}</p>
             {transactionId && (
                 <p className="text-green-500 mt-2">
-                    Payment successful, your transactionID: {transactionId}
+                    Payment succeeded, your transactionID: {transactionId}
                 </p>
             )}
         </form>
