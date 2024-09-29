@@ -15,6 +15,7 @@ import AddItems from '../pages/Dashboard/Admin/AddItems/AddItems';
 import ManageItems from '../pages/Dashboard/Admin/ManageItems/ManageItems';
 import UpdateItem from '../pages/Dashboard/Admin/UpdateItem/UpdateItem';
 import StripePayment from '../pages/Dashboard/Users/PaymentMethodStripe/StripePayment';
+import PaymentHistory from '../pages/Dashboard/Users/PaymentHistory/PaymentHistory';
 
 const router = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
         ),
         children: [
             // Users path
+            {
+                path: 'paymentHistory',
+                element: <PaymentHistory />,
+            },
             {
                 path: 'cart',
                 element: (
