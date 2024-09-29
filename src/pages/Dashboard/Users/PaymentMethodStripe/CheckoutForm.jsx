@@ -20,71 +20,87 @@ const CheckoutForm = () => {
 
     // Create paymentIntent as soon as the page loads
     useEffect(() => {
-        axiosSecure
-            .post('/create-payment-intent', {price: totalPrice})
-            .then((res) => {
-                console.log(res.data);
-                setClientSecret(res.data.clientSecret);
-            })
-            .catch((err) => console.log(err.message));
+        if (totalPrice > 0) {
+            axiosSecure
+                .post('/create-payment-intent', {price: totalPrice})
+                .then((res) => {
+                    console.log(res.data);
+                    setClientSecret(res.data.clientSecret);
+                })
+                .catch((err) => console.log(err.message));
+        }
     }, [axiosSecure, totalPrice]);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (!stripe || !elements) {
-            return;
-            // Stripe.js not loaded it, make sure to disabled.
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You want to pay ${totalPrice} USD!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Payment!',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                if (!stripe || !elements) {
+                    return;
+                    // Stripe.js not loaded it, make sure to disabled.
+                }
 
-        const card = elements.getElement(CardElement);
-        if (card === null) {
-            return;
-        }
+                const card = elements.getElement(CardElement);
+                if (card === null) {
+                    return;
+                }
 
-        // Use card elements with other Stripe.js APIs
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
-            type: 'card',
-            card,
-        });
+                // Use card elements with other Stripe.js APIs
+                const {error, paymentMethod} = await stripe.createPaymentMethod(
+                    {
+                        type: 'card',
+                        card,
+                    }
+                );
 
-        if (error) {
-            console.log('create payment method error :', error);
-            setError(error.message);
-        } else {
-            console.log('createPaymentMethod', paymentMethod);
-            setError('');
-        }
+                if (error) {
+                    console.log('create payment method error :', error);
+                    setError(error.message);
+                } else {
+                    console.log('createPaymentMethod', paymentMethod);
+                    setError('');
+                }
 
-        // Confirm card payment
-        const {paymentIntent, error: confirmError} =
-            await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: card,
-                    billing_details: {
-                        name: user?.name,
-                        email: user?.email,
-                    },
-                },
-            });
+                // Confirm card payment
+                const {paymentIntent, error: confirmError} =
+                    await stripe.confirmCardPayment(clientSecret, {
+                        payment_method: {
+                            card: card,
+                            billing_details: {
+                                name: user?.name,
+                                email: user?.email,
+                            },
+                        },
+                    });
 
-        if (confirmError) {
-            setError(confirmError.message);
-        } else {
-            console.log('confirm payment ', paymentIntent);
-            if (paymentIntent.status === 'succeeded') {
-                console.log(paymentIntent.id);
-                setTransactionId(paymentIntent.id);
+                if (confirmError) {
+                    setError(confirmError.message);
+                } else {
+                    console.log('confirm payment ', paymentIntent);
+                    if (paymentIntent.status === 'succeeded') {
+                        console.log(paymentIntent.id);
+                        setTransactionId(paymentIntent.id);
 
-                Swal.fire({
-                    position: 'top',
-                    icon: 'success',
-                    title: 'Your payment has been added successfully',
-                    showConfirmButton: false,
-                    timer: 2000,
-                });
+                        Swal.fire({
+                            position: 'top',
+                            icon: 'success',
+                            title: `Successful Payment ${totalPrice} USD!`,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                }
             }
-        }
+        });
     };
 
     return (
@@ -113,12 +129,12 @@ const CheckoutForm = () => {
                 type="submit"
                 disabled={!stripe || !clientSecret}
                 className="btn btn-sm btn-neutral mt-6">
-                Payment
+                Payment ${totalPrice}
             </button>
 
-            <p className="text-red-500">{error}</p>
+            <p className="text-red-500 mt-2">{error}</p>
             {transactionId && (
-                <p className="text-green-500">
+                <p className="text-green-500 mt-2">
                     Payment successful, your transactionID: {transactionId}
                 </p>
             )}
