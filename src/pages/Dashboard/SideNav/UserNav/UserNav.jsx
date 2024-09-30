@@ -15,7 +15,7 @@ const UserNav = () => {
     return (
         <>
             <li>
-                <NavLink to="/dashboard/home">
+                <NavLink to="/dashboard/userHome">
                     <FaHome></FaHome>
                     User Home
                 </NavLink>

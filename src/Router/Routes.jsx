@@ -16,6 +16,8 @@ import ManageItems from '../pages/Dashboard/Admin/ManageItems/ManageItems';
 import UpdateItem from '../pages/Dashboard/Admin/UpdateItem/UpdateItem';
 import StripePayment from '../pages/Dashboard/Users/PaymentMethodStripe/StripePayment';
 import PaymentHistory from '../pages/Dashboard/Users/PaymentHistory/PaymentHistory';
+import UserHome from '../pages/Dashboard/Users/UserHome/UserHome';
+import AdminHome from '../pages/Dashboard/Admin/AdminHome/AdminHome';
 
 const router = createBrowserRouter([
     {
@@ -54,8 +56,20 @@ const router = createBrowserRouter([
         children: [
             // Users path
             {
+                path: 'userHome',
+                element: (
+                    <PrivateRoutes>
+                        <UserHome />
+                    </PrivateRoutes>
+                ),
+            },
+            {
                 path: 'paymentHistory',
-                element: <PaymentHistory />,
+                element: (
+                    <PrivateRoutes>
+                        <PaymentHistory />
+                    </PrivateRoutes>
+                ),
             },
             {
                 path: 'cart',
@@ -67,6 +81,15 @@ const router = createBrowserRouter([
             },
 
             // Admin only path
+            {
+                path: 'adminHome',
+                element: (
+                    <AdminRoutes>
+                        <AdminHome />
+                    </AdminRoutes>
+                ),
+            },
+
             {
                 path: 'allUsers',
                 element: (

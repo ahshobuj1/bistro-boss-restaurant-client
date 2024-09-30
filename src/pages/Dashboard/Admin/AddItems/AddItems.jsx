@@ -4,6 +4,7 @@ import {FaUtensils} from 'react-icons/fa';
 import useAxiosPublic from '../../../../hooks/useAxiosPublic/useAxiosPublic';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure/useAxiosSecure';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 const AddItems = () => {
     const {register, handleSubmit, reset} = useForm();
@@ -42,6 +43,7 @@ const AddItems = () => {
                         category: data.category,
                         recipe: data.recipe,
                         image: imageData.data.display_url,
+                        date: moment().format('MMMM Do YYYY, h:mm:ss a'),
                     };
 
                     console.log(itemInfo);

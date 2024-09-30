@@ -2,10 +2,13 @@ import {Link, NavLink} from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import useCartQuery from '../../../hooks/useCartQuery/useCartQuery';
+import useAdmin from '../../../hooks/useAdmin/useAdmin';
 
 const Navbar = () => {
     const {user, logoutUser} = useAuth();
     const [carts] = useCartQuery();
+    const [isAdmin] = useAdmin();
+
     const totalPrice = carts.reduce(
         (prevTotal, cart) => prevTotal + cart.price,
         0
@@ -46,9 +49,35 @@ const Navbar = () => {
             <li>
                 <NavLink to="/shop/salads">SHOP</NavLink>
             </li>
+
+            {/* Nested ternary Operator */}
             <li>
-                <NavLink to="/dashboard">DASHBOARD</NavLink>
+                <NavLink
+                    to={
+                        user
+                            ? isAdmin
+                                ? '/dashboard/adminHome'
+                                : '/dashboard/userHome'
+                            : '/dashboard'
+                    }>
+                    DASHBOARD
+                </NavLink>
             </li>
+
+            {/* * Explanation of Nested Ternary 
+
+            {user && isAdmin && (
+                <li>
+                    <NavLink to="/dashboard/adminHome">DASHBOARD</NavLink>
+                </li>
+            )}
+
+            {user && !isAdmin && (
+                <li>
+                    <NavLink to="/dashboard/userHome">DASHBOARD</NavLink>
+                </li>
+            )} */}
+
             <li>
                 <NavLink to="/contact">CONTACT US</NavLink>
             </li>
