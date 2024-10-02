@@ -18,19 +18,19 @@ const SignIn = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        const {name, photoURL, email, password} = data;
-        console.log(name, photoURL, email, password);
+        const { email, password} = data;
+      //  console.log(name, photoURL, email, password);
 
         loginUser(email, password)
-            .then((res) => {
-                console.log(res.user);
+            .then(() => {
+              //  console.log(res.user);
 
                 Swal.fire({
                     title: 'Success',
                     text: 'Your account has been logged in successfully!',
                     icon: 'success',
                 });
-                console.log(location?.state);
+               // console.log(location?.state);
                 navigate(location?.state ? location?.state : '/');
             })
             .catch((err) => console.log(err.message));

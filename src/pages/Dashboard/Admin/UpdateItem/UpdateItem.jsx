@@ -11,7 +11,7 @@ const UpdateItem = () => {
 
     const {register, handleSubmit} = useForm();
     const onSubmit = (updatedItem) => {
-        console.log(updatedItem);
+      //  console.log(updatedItem);
 
         Swal.fire({
             title: 'Are you sure?',
@@ -26,7 +26,7 @@ const UpdateItem = () => {
                 axiosSecure
                     .patch(`/menu/${_id}`, updatedItem)
                     .then((res) => {
-                        console.log(res.data);
+                       // console.log(res.data);
                         if (res.data.modifiedCount > 0) {
                             Swal.fire({
                                 title: 'Updated!',

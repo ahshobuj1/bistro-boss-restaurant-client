@@ -10,7 +10,7 @@ const TableRow = ({user, idx}) => {
     const [, refetch] = useUserQuery();
 
     const handleAdMakeAdmin = (email) => {
-        console.log(email);
+       // console.log(email);
         Swal.fire({
             title: 'Are you sure?',
             text: `You want to make the user (${email}) Admin!`,
@@ -22,7 +22,7 @@ const TableRow = ({user, idx}) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.patch(`/users?email=${email}`).then((res) => {
-                    console.log(res);
+                  //  console.log(res);
                     if (res.data.modifiedCount > 0) {
                         Swal.fire({
                             title: 'success!',
@@ -49,7 +49,7 @@ const TableRow = ({user, idx}) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/users?email=${email}`).then((res) => {
-                    console.log(res.data);
+                  //  console.log(res.data);
                     if (res.data.deletedCount > 0) {
                         Swal.fire({
                             title: 'Deleted!',

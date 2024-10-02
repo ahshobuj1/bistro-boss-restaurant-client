@@ -21,11 +21,11 @@ const AdminNav = () => {
                     <FaList></FaList> Manage Items
                 </NavLink>
             </li>
-            <li>
+            {/*  <li>
                 <NavLink to="/dashboard/manageBookings">
                     <FaBook></FaBook> Manage Bookings
                 </NavLink>
-            </li>
+            </li> */}
             <li>
                 <NavLink to="/dashboard/allUsers">
                     <FaUsers></FaUsers> All Users

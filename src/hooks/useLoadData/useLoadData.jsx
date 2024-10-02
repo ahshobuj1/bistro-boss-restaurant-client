@@ -11,7 +11,9 @@ const useLoadData = () => {
     } = useQuery({
         queryKey: ['menuItems'],
         queryFn: async () => {
-            const res = await axiosPublic.get('http://localhost:5000/menu');
+            const res = await axiosPublic.get(
+                'https://bistro-boss-restaurant-server-livid.vercel.app/menu'
+            );
             return res.data;
         },
     });

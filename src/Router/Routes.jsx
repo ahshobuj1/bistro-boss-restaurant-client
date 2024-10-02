@@ -18,11 +18,13 @@ import StripePayment from '../pages/Dashboard/Users/PaymentMethodStripe/StripePa
 import PaymentHistory from '../pages/Dashboard/Users/PaymentHistory/PaymentHistory';
 import UserHome from '../pages/Dashboard/Users/UserHome/UserHome';
 import AdminHome from '../pages/Dashboard/Admin/AdminHome/AdminHome';
+import ErrorPage from '../components/ErrorPage/ErrorPage';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: '/',
@@ -122,7 +124,9 @@ const router = createBrowserRouter([
                     </AdminRoutes>
                 ),
                 loader: ({params}) =>
-                    fetch(`http://localhost:5000/menu/${params.id}`),
+                    fetch(
+                        `https://bistro-boss-restaurant-server-livid.vercel.app/menu/${params.id}`
+                    ),
             },
             {
                 path: 'payment',

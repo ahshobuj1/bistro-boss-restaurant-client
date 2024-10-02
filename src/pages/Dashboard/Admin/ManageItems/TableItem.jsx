@@ -10,8 +10,8 @@ const TableItem = ({item, idx}) => {
     const [, , refetch] = useLoadData();
     const axiosSecure = useAxiosSecure();
 
-    const handleDeleteItem = (id) => {
-        console.log(id);
+    const handleDeleteItem = () => {
+        // console.log(id);
 
         Swal.fire({
             title: 'Are you sure?',
@@ -26,7 +26,7 @@ const TableItem = ({item, idx}) => {
                 axiosSecure
                     .delete(`/menu/${_id}`)
                     .then((res) => {
-                        console.log(res.data);
+                        // console.log(res.data);
 
                         if (res.data.deletedCount > 0) {
                             Swal.fire({

@@ -23,7 +23,7 @@ const TableRaw = ({cart, idx}) => {
                 axiosSecure
                     .delete(`/carts/${id}`)
                     .then((res) => {
-                        console.log(res);
+                      //  console.log(res);
                         if (res.data.deletedCount > 0) {
                             Swal.fire({
                                 title: 'Deleted!',

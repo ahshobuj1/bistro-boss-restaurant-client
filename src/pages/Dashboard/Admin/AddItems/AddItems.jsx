@@ -12,7 +12,7 @@ const AddItems = () => {
     const axiosSecure = useAxiosSecure();
 
     const onSubmit = (data) => {
-        console.log(data);
+       // console.log(data);
 
         Swal.fire({
             title: 'Are you sure?',
@@ -46,10 +46,10 @@ const AddItems = () => {
                         date: moment().format('MMMM Do YYYY, h:mm:ss a'),
                     };
 
-                    console.log(itemInfo);
+                   // console.log(itemInfo);
                     const resMenu = await axiosSecure.post('/menu', itemInfo);
                     const result = resMenu.data;
-                    console.log(result);
+                   // console.log(result);
 
                     if (result.insertedId) {
                         // Todo : success alert

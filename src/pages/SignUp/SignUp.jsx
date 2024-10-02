@@ -24,8 +24,8 @@ const SignUp = () => {
         const {name, photoURL, email, password} = data;
 
         createUser(email, password)
-            .then((res) => {
-                console.log(res.user);
+            .then(() => {
+                //   console.log(res.user);
 
                 updateProfile(auth.currentUser, {
                     displayName: name,
@@ -36,7 +36,7 @@ const SignUp = () => {
                         const userInfo = {name, photoURL, email};
 
                         axiosPublic.post('/users', userInfo).then((res) => {
-                            console.log(res.data);
+                            //  console.log(res.data);
 
                             if (res.data.insertedId) {
                                 Swal.fire({

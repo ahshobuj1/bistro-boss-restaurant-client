@@ -91,9 +91,9 @@ const CheckoutForm = () => {
                 if (confirmError) {
                     setError(confirmError.message);
                 } else {
-                    console.log('confirm payment ', paymentIntent);
+                    // console.log('confirm payment ', paymentIntent);
                     if (paymentIntent.status === 'succeeded') {
-                        console.log(paymentIntent.id);
+                        //  console.log(paymentIntent.id);
                         setTransactionId(paymentIntent.id);
 
                         const paymentHistory = {
@@ -110,7 +110,7 @@ const CheckoutForm = () => {
                         axiosSecure
                             .post('/payments', paymentHistory)
                             .then((res) => {
-                                console.log(res.data);
+                                //  console.log(res.data);
                                 if (
                                     res.data.paymentResult.insertedId &&
                                     res.data.cartResult.deletedCount > 0

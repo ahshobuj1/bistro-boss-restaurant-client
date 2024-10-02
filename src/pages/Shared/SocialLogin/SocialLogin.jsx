@@ -22,8 +22,8 @@ const SocialLogin = () => {
 
                 axiosPublic
                     .post('/users', userInfo)
-                    .then((res) => {
-                        console.log('under public axios ', res.data, userInfo);
+                    .then(() => {
+                       // console.log('under public axios ', res.data, userInfo);
                         Swal.fire({
                             position: 'center',
                             icon: 'success',
